@@ -16,7 +16,7 @@
 
 package com.task.contactmanagement.di.components;
 
-import com.task.contactmanagement.MainActivity;
+import com.task.contactmanagement.modules.home.MainActivity;
 import com.task.contactmanagement.di.module.ContactModule;
 import com.task.contactmanagement.di.scope.PerActivity;
 
