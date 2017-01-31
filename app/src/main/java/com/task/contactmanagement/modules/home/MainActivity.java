@@ -2,13 +2,11 @@ package com.task.contactmanagement.modules.home;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,6 +15,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,23 +23,23 @@ import com.task.contactmanagement.R;
 import com.task.contactmanagement.base.BaseActivity;
 import com.task.contactmanagement.di.components.DaggerContactComponent;
 import com.task.contactmanagement.di.module.ContactModule;
+import com.task.contactmanagement.modules.home.adapters.ContactAdapter;
+import com.task.contactmanagement.modules.home.adapters.ContactListAdapter;
 import com.task.contactmanagement.mvp.model.Contact;
 import com.task.contactmanagement.mvp.presenter.ContactPresenter;
 import com.task.contactmanagement.mvp.view.MainView;
 import com.task.contactmanagement.utilities.NetworkUtils;
-
 import java.util.List;
 
 import javax.inject.Inject;
-
 import butterknife.Bind;
 /**
  * Created by Rajeesh adambil on 29/01/2017.
  */
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener,MainView {
-    @Bind(R.id.repo_list)
-    protected RecyclerView mRepoList;
+    @Bind(R.id.contact_list)
+    protected ListView mListView;
     @Bind(R.id.nav_view)
     protected NavigationView navigationView;
     @Bind(R.id.toolbar)
@@ -50,7 +49,7 @@ public class MainActivity extends BaseActivity
 
     @Inject
     protected ContactPresenter mPresenter;
-    private ContactAdapter mContactAdapter;
+    private ContactListAdapter mContactAdapter;
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
@@ -84,11 +83,17 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
         navigationView.setNavigationItemSelectedListener(this);
-        mRepoList.setHasFixedSize(true);
-        mRepoList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        mContactAdapter = new ContactAdapter(getLayoutInflater());
-        mContactAdapter.setOnContactClickListener(mContactClickListener);
-        mRepoList.setAdapter(mContactAdapter);
+//        contactListbinding binding = DataBindingUtil.setContentView(this, getContentView());
+//
+//        // Set the heading
+//
+//        binding.setContactMap(new ContactMapper());
+//        mRepoList.setHasFixedSize(true);
+//        mRepoList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+ mContactAdapter = new ContactListAdapter();
+//        mContactAdapter.setOnContactClickListener(mContactClickListener);
+//        mRepoList.setAdapter(mContactAdapter);
+       mListView.setAdapter(mContactAdapter);
     }
 
     @Override

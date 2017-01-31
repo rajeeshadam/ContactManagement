@@ -1,6 +1,6 @@
 
 
-package com.task.contactmanagement.modules.home;
+package com.task.contactmanagement.modules.home.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

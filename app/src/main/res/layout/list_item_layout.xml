@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data class="ContactBinding">
+        <variable
+            name="contact"
+            type="com.task.contactmanagement.mvp.model.Contact"/>
+    </data>
+<LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="horizontal">
+    <FrameLayout
+        android:layout_width="50dp"
+        android:layout_height="match_parent"
+        android:background="?android:attr/colorBackground">
 
+        <include layout="@layout/pinned_header_listview_side_header"/>
+    </FrameLayout>
     <ImageView
         android:id="@+id/contact_icon"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:background="#F8F8F8"
+        android:src="@{contact.profile_pic}"
         android:scaleType="fitXY"
         android:padding="5dp" />
 
@@ -22,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
+            android:text="@{contact.first_name}"
             android:layout_gravity="center_vertical"
             android:textSize="16sp"
             android:textStyle="bold" />
@@ -30,3 +41,4 @@
 
 
 </LinearLayout>
+</layout>

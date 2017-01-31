@@ -11,8 +11,13 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
+
+import rx.Observable;
+import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 public class Storage extends SQLiteOpenHelper {
     private static final String ID = "id";
@@ -27,7 +32,7 @@ public class Storage extends SQLiteOpenHelper {
     private static final String SELECT_QUERY = "SELECT * FROM " + TABLE_NAME;
 
     public static final String CREATE_TABLE = "create table " + TABLE_NAME + "(" +
-            ID + " integer primary key autoincrement not null," +
+            ID + " integer not null," +
             FIRST_NAME + " text not null," +
             LAST_NAME + " text not null," +
             PROFILE_PIC + " text not null," +
@@ -55,26 +60,48 @@ public class Storage extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addContact(Contact contact) {
+    public void addContact(List<Contact> List) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues values = new ContentValues();
-        values.put(ID, contact.getId());
-        values.put(FIRST_NAME, contact.getFirst_name());
-        values.put(LAST_NAME, contact.getLast_name());
-        values.put(PROFILE_PIC, contact.getProfile_pic());
-        values.put(FAVORITE, String.valueOf(contact.getFavourite()));
-        values.put(URL, contact.getUrl());
+        for (Contact contact : List) {
+            ContentValues values = new ContentValues();
+            values.put(ID, contact.getId());
+            values.put(FIRST_NAME, contact.getFirst_name());
+            values.put(LAST_NAME, contact.getLast_name());
+            values.put(PROFILE_PIC, contact.getProfile_pic());
+            values.put(FAVORITE, String.valueOf(contact.getFavourite()));
+            values.put(URL, contact.getUrl());
 
-        try {
-            db.insert(TABLE_NAME, null, values);
-        } catch(SQLException e) {
-            Log.d(TAG, e.getMessage());
+            try {
+                db.insert(TABLE_NAME, null, values);
+            } catch (SQLException e) {
+                Log.d(TAG, e.getMessage());
+            }
+
+            db.close();
         }
-
-        db.close();
     }
-
+//    Observable addContactList(List<Contact> List) {
+//        return makeObservable(addContact(List))
+//                .subscribeOn(Schedulers.computation()) ;// note: do not use Schedulers.io()
+//    }
+//
+//
+//
+//
+//    private static <T> Observable<T> makeObservable(final Callable<T> func) {
+//        return Observable.create(
+//                new Observable.OnSubscribe<T>() {
+//                    @Override
+//                    public void call(Subscriber<? super T> subscriber) {
+//                        try {
+//                            subscriber.onNext(func.call());
+//                        } catch(Exception ex) {
+//                            Log.e(TAG, "Error reading from the database", ex);
+//                        }
+//                    }
+//                });
+//    }
     public List<Contact> getSavedContacts() {
         List<Contact> contactList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
