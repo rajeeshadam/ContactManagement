@@ -16,6 +16,7 @@
 
 package com.task.contactmanagement.di.components;
 
+import com.task.contactmanagement.modules.details.DetailActivity;
 import com.task.contactmanagement.modules.home.MainActivity;
 import com.task.contactmanagement.di.module.ContactModule;
 import com.task.contactmanagement.di.scope.PerActivity;
@@ -31,4 +32,5 @@ import dagger.Component;
 public interface ContactComponent {
 
     void inject(MainActivity activity);
+    void inject(DetailActivity activity);
 }

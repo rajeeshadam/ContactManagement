@@ -1,63 +1,110 @@
-
-
 package com.task.contactmanagement.modules.details;
 
 import android.content.Intent;
-import android.os.Build;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.LayoutInflater;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.task.contactmanagement.R;
 import com.task.contactmanagement.base.BaseActivity;
-import com.task.contactmanagement.helper.ImageHandler;
+import com.task.contactmanagement.databinding.ContactBinding;
+import com.task.contactmanagement.databinding.ContactDetailBinding;
+import com.task.contactmanagement.di.components.DaggerContactComponent;
+import com.task.contactmanagement.di.module.ContactModule;
+import com.task.contactmanagement.modules.home.adapters.ContactListAdapter;
 import com.task.contactmanagement.mvp.model.Contact;
+import com.task.contactmanagement.mvp.presenter.ContactPresenter;
+import com.task.contactmanagement.mvp.presenter.DetailPresenter;
+import com.task.contactmanagement.mvp.view.MainView;
+import com.task.contactmanagement.utilities.NetworkUtils;
 
-import butterknife.Bind;
+import java.util.List;
 
-public class DetailActivity extends BaseActivity {
+import javax.inject.Inject;
 
-    public static final String CONTACT = "contact";
+/**
+ * Created by rajeesh on 3/2/17.
+ */
 
-    @Bind(R.id.contact_icon) protected ImageView mContactImage;
-    @Bind(R.id.textview_name) protected TextView mContactName;
+public class DetailActivity extends BaseActivity implements MainView {
+    int id;
+    @Inject
+    protected DetailPresenter mPresenter;
+    @Override
+    protected int getContentView() {
+       return R.layout.activity_detail;
+    }
 
     @Override
     protected void onViewReady(Bundle savedInstanceState, Intent intent) {
         super.onViewReady(savedInstanceState, intent);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mContactImage.setTransitionName("cakeImageAnimation");
-        }
-
+       id= intent.getIntExtra("contact_id",0);
+        System.out.println("ssssnew"+id);
         showBackArrow();
-
-        Contact contact = (Contact) intent.getSerializableExtra(CONTACT);
-        setTitle("Contact Detail");
-
-        mContactName.setText(contact.getFirst_name());
-
-
-        Glide.with(this).load(contact.getProfile_pic())
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .into(new ImageHandler(mContactImage));
+       initializeList();
+      loadContactDetails();
     }
-
-    @Override
-    protected int getContentView() {
-        return R.layout.activity_detail;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                onBackPressed();
-                return true;
+    private void loadContactDetails() {
+        if(NetworkUtils.isNetAvailable(this)) {
+            mPresenter.getContactDetails(id);
+        } else {
+           // mPresenter.getContactFromDatabase();
         }
-        return super.onOptionsItemSelected(item);
+
+
+    }
+    @Override
+    protected void resolveDaggerDependency() {
+        DaggerContactComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .contactModule(new ContactModule(this))
+                .build().inject(this);
+    }
+
+//    @Override
+//    public void onContactLoaded(List<Contact> contacts) {
+//
+//    }
+
+    private void initializeList() {
+
+
+
+        setTitle("Contact Management System");
+
+    }
+
+    @Override
+    public void onContactLoaded(List<Contact> contacts) {
+
+    }
+
+    @Override
+    public void onContactDetailsLoaded(Contact contact) {
+
+        ContactDetailBinding binding=DataBindingUtil.setContentView(this, getContentView());
+        binding.setContact(contact);
+
+    }
+
+    @Override
+    public void onShowDialog(String message) {
+
+    }
+
+    @Override
+    public void onHideDialog() {
+
+    }
+
+    @Override
+    public void onShowToast(String message) {
+
+    }
+
+    @Override
+    public void onClearItems() {
+
     }
 }

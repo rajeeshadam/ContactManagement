@@ -3,20 +3,26 @@
     <data class="ContactBinding">
         <variable
             name="contact"
-            type="com.task.contactmanagement.mvp.model.Contact"/>
+            type="com.task.contactmanagement.viewmodel.ContactViewModel"/>
     </data>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#FFFFFF"
     android:orientation="horizontal">
-    <FrameLayout
-        android:layout_width="50dp"
-        android:layout_height="match_parent"
-        android:background="?android:attr/colorBackground">
 
-        <include layout="@layout/pinned_header_listview_side_header"/>
-    </FrameLayout>
+<TextView
+
+    android:id="@+id/header_text"
+    style="@style/PinnedHeader"
+    android:layout_width="50dp"
+    android:layout_gravity="center_vertical"
+    android:textColor="@color/pinned_header_text"
+    android:layout_height="50dp"
+    android:background="@null"
+    android:text="@{contact.start_alphabet}" />
+
+
     <ImageView
         android:id="@+id/contact_icon"
         android:layout_width="80dp"
@@ -32,7 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
-            android:text="@{contact.first_name}"
+            android:text="@{contact.first_name+' '+contact.last_name}"
             android:layout_gravity="center_vertical"
             android:textSize="16sp"
             android:textStyle="bold" />

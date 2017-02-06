@@ -5,6 +5,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.task.contactmanagement.R;
 import com.task.contactmanagement.helper.ImageHandler;
 import com.task.contactmanagement.utilities.RoundImageTransform;
 
@@ -18,6 +19,8 @@ public class ListBinder {
         System.out.println("inside"+url);
         Glide.with(view.getContext())
                 .load(url)
+                .placeholder(R.drawable.profile)
+                .error(R.drawable.profile)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .transform(new RoundImageTransform(view.getContext()))
                 .into(new ImageHandler(view));

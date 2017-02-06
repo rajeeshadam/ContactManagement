@@ -11,13 +11,8 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 
 import javax.inject.Inject;
-
-import rx.Observable;
-import rx.Subscriber;
-import rx.schedulers.Schedulers;
 
 public class Storage extends SQLiteOpenHelper {
     private static final String ID = "id";

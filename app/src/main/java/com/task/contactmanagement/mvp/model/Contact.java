@@ -10,6 +10,17 @@ public class Contact implements Serializable {
     private String url;
     private boolean favorite=false;
 
+    public String getStart_alphabet() {
+        return start_alphabet;
+    }
+
+    public void setStart_alphabet(String start_alphabet) {
+        this.start_alphabet = start_alphabet;
+    }
+
+    private String start_alphabet="";
+
+
     public String getProfile_pic() {
         return this.profile_pic;
     }
@@ -35,11 +46,11 @@ public class Contact implements Serializable {
     }
 
     public String getFirst_name() {
-        return this.first_name;
+        return this.first_name.trim();
     }
 
     public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+        this.first_name = first_name.trim();
     }
 
     public String getUrl() {

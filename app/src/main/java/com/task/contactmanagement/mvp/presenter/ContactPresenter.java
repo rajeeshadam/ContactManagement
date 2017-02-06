@@ -3,21 +3,12 @@
 package com.task.contactmanagement.mvp.presenter;
 
 
-import android.databinding.BindingAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.task.contactmanagement.api.ContactApiService;
 import com.task.contactmanagement.base.BasePresenter;
-import com.task.contactmanagement.helper.ImageHandler;
 import com.task.contactmanagement.mapper.ContactMapper;
-import com.task.contactmanagement.modules.home.adapters.ContactListAdapter;
 import com.task.contactmanagement.mvp.model.Contact;
 import com.task.contactmanagement.mvp.model.Storage;
 import com.task.contactmanagement.mvp.view.MainView;
-import com.task.contactmanagement.utilities.RoundImageTransform;
 
 import java.util.List;
 

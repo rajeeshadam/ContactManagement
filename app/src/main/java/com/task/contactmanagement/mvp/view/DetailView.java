@@ -10,9 +10,8 @@ import com.task.contactmanagement.mvp.model.Contact;
 import java.util.List;
 
 
-public interface MainView extends BaseView {
+public interface DetailView extends BaseView {
 
-    void onContactLoaded(List<Contact> contacts);
     void onContactDetailsLoaded(Contact contact);
 
     void onShowDialog(String message);

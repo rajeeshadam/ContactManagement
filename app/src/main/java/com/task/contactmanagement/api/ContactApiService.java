@@ -8,6 +8,7 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import rx.Observable;
 /**
  * Created by Rajeesh adambil on 29/01/2017.
@@ -18,5 +19,5 @@ public interface ContactApiService {
     Observable<List<Contact>> getContact();
 
     @GET("/contacts/{id}.json")
-    Call<Contact> getContactDetails();
+    Observable<Contact> getContactDetails(@Path("id") int contact_Id);
 }

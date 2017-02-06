@@ -5,7 +5,6 @@ package com.task.contactmanagement.mapper;
 import com.task.contactmanagement.mvp.model.Contact;
 import com.task.contactmanagement.mvp.model.Storage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
